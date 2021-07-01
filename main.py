@@ -33,7 +33,7 @@ def plot_cumulative_state(df: pd.DataFrame, outfile: str):
         title="Vaccination Count in Malaysia by State",
     )
 
-    fig.write_html(outfile)
+    fig.write_html(outfile, include_plotlyjs='cdn')
 
 
 if __name__ == "__main__":
