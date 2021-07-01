@@ -1,36 +1,15 @@
 import requests
 import pandas as pd
 import plotly.express as px
-import plotly.graph_objects as go
 
 from io import StringIO
 
 
-MALAYSIA_DATA_URL = "https://raw.githubusercontent.com/CITF-Malaysia/citf-public/main/vaccination/vax_malaysia.csv"
 STATE_DATA_URL = "https://raw.githubusercontent.com/CITF-Malaysia/citf-public/main/vaccination/vax_state.csv"
-
-CATEGORYARRAY = [
-    "W.P. Putrajaya",
-    "W.P. Labuan",
-    "Terengganu",
-    "Selangor",
-    "Sarawak",
-    "Sabah",
-    "Pulau Pinang",
-    "Perlis",
-    "Perak",
-    "Pahang",
-    "Negeri Sembilan",
-    "Melaka",
-    "Kelantan",
-    "Kedah",
-    "Johor",
-]
 
 
 def fetch_csv(data_url: str) -> pd.DataFrame:
-    r = requests.get(data_url)
-    return pd.read_csv(StringIO(r.text))
+    return pd.read_csv(StringIO(requests.get(data_url).text))
 
 
 def clean(df: pd.DataFrame) -> pd.DataFrame:
