@@ -1,0 +1,31 @@
+name: Update Graphs
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *" # Run workflow everyday at 12 AM
+
+jobs:
+  vax-count-by-state:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.8"
+
+      - name: Install dependencies
+        run: pip3 install -r requirements.txt
+
+      - name: Fetch latest data & generate new graph
+        run: python3 main.py
+
+      - name: Commit new graph to repo
+        run: |
+          git config user.name 'Github Actions Bot'
+          git config user.email 'Github Actions Bot <>'
+
+          DATE=$(date --iso-8601)
+          git commit -m "bot: update graph for $DATE"
+          git push -u origin main
