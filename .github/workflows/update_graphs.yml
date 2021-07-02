@@ -1,6 +1,8 @@
 name: Update Graphs
 
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
   schedule:
     - cron: "0 0 * * *" # Run workflow everyday at 12 AM
