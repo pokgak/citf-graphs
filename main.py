@@ -16,6 +16,7 @@ def clean(df: pd.DataFrame) -> pd.DataFrame:
     return (
         df.set_index(["date", "state"])
         .loc[:, ["dose1_cumul", "dose2_cumul", "total_cumul"]]
+        .rename(columns={"dose1_cumul": "partially_vaxed", "dose2_cumul": "fully_vaxed"})
         .sort_values(by="total_cumul", ascending=False)
         .sort_index(level="date", sort_remaining=False)
         .reset_index()
@@ -26,7 +27,7 @@ def plot_cumulative_state(df: pd.DataFrame, outfile: str):
     fig = px.bar(
         state_data,
         x="state",
-        y=["dose1_cumul", "dose2_cumul"],
+        y=["partially_vaxed", "fully_vaxed"],
         animation_frame="date",
         animation_group="state",
         labels={"value": "Total vaccinated", "state": "", "variable": "Dose Type"},
