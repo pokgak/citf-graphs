@@ -29,5 +29,5 @@ jobs:
           git config user.email 'Github Actions Bot <>'
 
           DATE=$(date --iso-8601)
-          git commit -m "bot: update graph for $DATE"
+          git commit -am "bot: update graph for $DATE"
           git push -u origin main
