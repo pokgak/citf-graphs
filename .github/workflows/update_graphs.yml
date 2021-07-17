@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/setup-python@v2
         with:
@@ -25,9 +27,6 @@ jobs:
 
       - name: Commit new graph to repo
         run: |
-          git config user.name 'Github Actions Bot'
-          git config user.email 'Github Actions Bot <>'
-
           DATE=$(date --iso-8601)
           git commit -am "bot: update graph for $DATE"
           git push -u origin main
