@@ -19,14 +19,26 @@ jobs:
         with:
           python-version: "3.8"
 
+      - name: Cache pip
+        uses: actions/cache@v2
+        with:
+          # This path is specific to Ubuntu
+          path: ~/.cache/pip
+          # Look to see if there is a cache hit for the corresponding requirements file
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+            ${{ runner.os }}-
+
       - name: Install dependencies
         run: pip3 install -r requirements.txt
 
       - name: Fetch latest data & generate new graph
         run: python3 main.py
+        
+      - id: get-date
+        run: echo "::set-output name=value::$(date --iso-8601)"
 
-      - name: Commit new graph to repo
-        run: |
-          DATE=$(date --iso-8601)
-          git commit -am "bot: update graph for $DATE"
-          git push -u origin main
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "bot: update graph for ${{ steps.get-date.outputs.value }}"
