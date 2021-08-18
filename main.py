@@ -15,9 +15,9 @@ def fetch_csv(data_url: str) -> pd.DataFrame:
 def clean(df: pd.DataFrame) -> pd.DataFrame:
     return (
         df.set_index(["date", "state"])
-        .loc[:, ["dose1_cumul", "dose2_cumul", "total_cumul"]]
-        .rename(columns={"dose1_cumul": "partially_vaxed", "dose2_cumul": "fully_vaxed"})
-        .sort_values(by="total_cumul", ascending=False)
+        .loc[:, ["cumul_partial", "cumul_full", "cumul"]]
+        .rename(columns={"cumul_partial": "partially_vaxed", "cumul_full": "fully_vaxed"})
+        .sort_values(by="cumul", ascending=False)
         .sort_index(level="date", sort_remaining=False)
         .reset_index()
     )
