@@ -39,6 +39,8 @@ jobs:
       - id: get-date
         run: echo "::set-output name=value::$(date --iso-8601)"
 
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - uses: EndBug/add-and-commit@v7
         with:
-          commit_message: "bot: update graph for ${{ steps.get-date.outputs.value }}"
+          add: 'index.html'
+          default_author: github_actions
+          message: "bot: update data for ${{ steps.get-date.outputs.value }}"
